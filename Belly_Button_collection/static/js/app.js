@@ -21,14 +21,11 @@ function init() {
        console.log(og_sample);
        
        //initial analysis and plots for the first subject
-       ///////////////  optionChanged(ids[0]); ///////////////
        store_meta_data(og_sample);
        subject_hbar_chart(og_sample);
        subject_bubble_chart(og_sample);
     });    
 };
-
-//Create a horizontal bar chart to display the top 10 OTUs found in that individual.
 
 //Retreive and display the individual subject's metadata: demographic information.   
 function store_meta_data(subject) {
@@ -45,6 +42,7 @@ function store_meta_data(subject) {
     });
 };
 
+//Create a horizontal bar chart to display the top 10 OTUs found in that individual.
 function subject_hbar_chart(subject){
     d3.json(url).then((data) => {
         let value = data.samples.filter(result => result.id == subject);
@@ -75,6 +73,7 @@ function subject_hbar_chart(subject){
     });
 };
 
+//Create a bubble chart that displays each sample.
 function subject_bubble_chart(subject){
     d3.json(url).then((data) => {
         let value = data.samples.filter(result => result.id == subject);
@@ -106,23 +105,17 @@ function subject_bubble_chart(subject){
     });
 };
 
-init();
-
-
-  // Render the plot to the div tag with id "plot"
-
-//Create a bubble chart that displays each sample.
-    //Use otu_ids for the x values.
-    //Use sample_values for the y values.
-    //Use sample_values for the marker size.
-    //Use otu_ids for the marker colors.
-    //Use otu_labels for the text values.
-
-
-
-
 //Update all the plots when a new sample is selected.  
+function optionChanged(subject_id) {
+    console.log("Subject #:", subject_id);
+    //call all functions to refresh dashboard
+    store_meta_data(subject_id);
+    subject_hbar_chart(subject_id);
+    subject_bubble_chart(subject_id);
+};
 
+//Let's do it!
+init();
 
 
 //Deploy your app to a free static page hosting service, such as GitHub Pages. 
